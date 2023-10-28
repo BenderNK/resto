@@ -20,7 +20,5 @@ enum RestaurantType: String, CaseIterable, Identifiable, Codable, Hashable {
     case German
     case South_American
     
-    var id: String {
-        return self.rawValue
-    }
+    var id: Self { self }
 }
