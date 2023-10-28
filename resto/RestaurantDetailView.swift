@@ -28,7 +28,7 @@ struct RestaurantDetailView: View {
                     .autocorrectionDisabled(true)
                     .textInputAutocapitalization(.words)
                     
-                Picker("Restaurant Type", selection: $restaurantType) {
+                Picker("Cuisine", selection: $restaurantType) {
                     ForEach(RestaurantType.allCases) { eachRestaurantType in
                         Text(eachRestaurantType.rawValue.capitalized)
                     }
