@@ -14,10 +14,11 @@ struct ContentView: View {
     @State private var sortOrder = SortDescriptor(\RestaurantModel.creationDate, order: .reverse)
     @State private var columnVisibility = NavigationSplitViewVisibility.doubleColumn
     @State private var path = [RestaurantModel]()
+    @State private var searchText = ""
 
     var body: some View {
         NavigationSplitView(sidebar: {
-            RestaurantSorterView(with: self.sortOrder)
+            RestaurantSorterView(with: self.sortOrder, searchString: searchText)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: addRestaurant) {
@@ -32,15 +33,16 @@ struct ContentView: View {
                                 Text("City")
                                     .tag(SortDescriptor(\RestaurantModel.city))
                                 Text("Cuisine")
-                                    .tag(SortDescriptor(\RestaurantModel._cuisineStringValue))
+                                    .tag(SortDescriptor(\RestaurantModel._cuisineRawValue))
                                 Text("Rating")
-                                    .tag(SortDescriptor(\RestaurantModel._starRatingIntValue, order: .reverse))
+                                    .tag(SortDescriptor(\RestaurantModel._starRatingRawValue, order: .reverse))
                                 Text("Creation Date")
                                     .tag(SortDescriptor(\RestaurantModel.creationDate, order: .reverse))
                             }.pickerStyle(.inline)
                         }
                     }
                 }
+                .searchable(text: $searchText)
                 .navigationTitle("Restaurants")
                 .navigationBarTitleDisplayMode(.automatic)
                 .navigationDestination(for: RestaurantModel.self, destination: { clickedRestaurant in

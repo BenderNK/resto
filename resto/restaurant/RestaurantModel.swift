@@ -29,13 +29,13 @@ class RestaurantModel {
     var postalCode: String
     
     /// do not use this value - only added for CoreData semantics
-    var _cuisineStringValue: String
+    var _cuisineRawValue: String
     
     /// user's preferred sort order
     var sortOrder: Int
     
     /// do not use this value - only added for CoreData semantics
-    var _starRatingIntValue: Int
+    var _starRatingRawValue: Int
     
     /// date when this record was created
     let creationDate: Date
@@ -47,9 +47,9 @@ class RestaurantModel {
         self.city = "City"
         self.stateOrProvince = ""
         self.postalCode = ""
-        self._cuisineStringValue = Cuisine.other.rawValue
+        self._cuisineRawValue = Cuisine.other.rawValue
         self.sortOrder = -1
-        self._starRatingIntValue = StarRating.three.rawValue
+        self._starRatingRawValue = StarRating.three.rawValue
         self.creationDate = Date()
     }
     
@@ -63,9 +63,9 @@ class RestaurantModel {
         self.stateOrProvince = stateOrProvince
         self.postalCode = postalCode
         
-        self._cuisineStringValue = cuisine
+        self._cuisineRawValue = cuisine
         self.sortOrder = sortOrder
-        self._starRatingIntValue = starRating
+        self._starRatingRawValue = starRating
         self.creationDate = Date()
     }
 }
@@ -74,21 +74,21 @@ extension RestaurantModel {
     /// the type of cuisine for this restaurant
     var cuisine: Cuisine {
         get {
-            return Cuisine(rawValue: self._cuisineStringValue)!
+            return Cuisine(rawValue: self._cuisineRawValue)!
         }
         
         set {
-            self._cuisineStringValue = newValue.rawValue
+            self._cuisineRawValue = newValue.rawValue
         }
     }
     
     var starRating: StarRating {
         get {
-            return StarRating(rawValue: self._starRatingIntValue)!
+            return StarRating(rawValue: self._starRatingRawValue)!
         }
         
         set {
-            self._starRatingIntValue = newValue.rawValue
+            self._starRatingRawValue = newValue.rawValue
         }
     }
 }
