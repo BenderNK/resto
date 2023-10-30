@@ -11,39 +11,41 @@ import SwiftData
 struct ContentView: View {
     
     @Environment(\.modelContext) private var modelContext
-    @Query private var restaurants: [RestaurantModel]
+    @State private var sortOrder = SortDescriptor(\RestaurantModel.creationDate, order: .reverse)
     @State private var columnVisibility = NavigationSplitViewVisibility.doubleColumn
     @State private var path = [RestaurantModel]()
 
     var body: some View {
         NavigationSplitView(sidebar: {
-            List {
-                ForEach(restaurants) { eachRestaurant in
-                    NavigationLink(value: eachRestaurant) {
-                        VStack(alignment: .leading, spacing: 4, content: {
-                            Text(eachRestaurant.name).font(.headline)
-                            Text(eachRestaurant.address).font(.subheadline)
-                            Text(eachRestaurant.cuisine.name).font(.footnote).foregroundStyle(.gray)
-                        })
+            RestaurantSorterView(with: self.sortOrder)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: addRestaurant) {
+                            Label("Add Item", systemImage: "plus")
+                        }
+                    }
+                    ToolbarItem {
+                        Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                            Picker("Sort", selection: $sortOrder) {
+                                Text("Name")
+                                    .tag(SortDescriptor(\RestaurantModel.name))
+                                Text("City")
+                                    .tag(SortDescriptor(\RestaurantModel.city))
+                                Text("Cuisine")
+                                    .tag(SortDescriptor(\RestaurantModel.cuisine))
+                                Text("Rating")
+                                    .tag(SortDescriptor(\RestaurantModel.starRating, order: .reverse))
+                                Text("Creation Date")
+                                    .tag(SortDescriptor(\RestaurantModel.creationDate, order: .reverse))
+                            }.pickerStyle(.inline)
+                        }
                     }
                 }
-                .onDelete(perform: deleteRestaurants)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: addRestaurant) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-                ToolbarItem {
-                    EditButton()
-                }
-            }
-            .navigationTitle("Restaurants")
-            .navigationBarTitleDisplayMode(.automatic)
-            .navigationDestination(for: RestaurantModel.self, destination: { clickedRestaurant in
-                RestaurantDetailView(restaurant: clickedRestaurant)
-            })
+                .navigationTitle("Restaurants")
+                .navigationBarTitleDisplayMode(.automatic)
+                .navigationDestination(for: RestaurantModel.self, destination: { clickedRestaurant in
+                    RestaurantDetailView(restaurant: clickedRestaurant)
+                })
         }, detail: {
             
         })
@@ -53,15 +55,6 @@ struct ContentView: View {
         withAnimation {
             let newItem = RestaurantModel()
             modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteRestaurants(indexSet: IndexSet) {
-        withAnimation {
-            for index in indexSet {
-                let restaurantToDelete = restaurants[index]
-                modelContext.delete(restaurantToDelete)
-            }
         }
     }
 }

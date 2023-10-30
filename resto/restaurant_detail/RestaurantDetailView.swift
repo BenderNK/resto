@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct RestaurantDetailView: View {
+    
     @Bindable var restaurant: RestaurantModel
     
     var body: some View {
@@ -18,9 +19,24 @@ struct RestaurantDetailView: View {
                     .font(.body)
                     .autocorrectionDisabled(true)
                     .textInputAutocapitalization(.words)
-                   
-                TextField("Address", text: $restaurant.address, axis: .vertical)
+                
+                TextField("Address", text: $restaurant.streetAddress, axis: .vertical)
                     .font(.body)
+                
+                GeometryReader { metrics in
+                    HStack(spacing: 4, content: {
+                        TextField("City", text: $restaurant.city)
+                            .font(.body)
+                            .frame(width: metrics.size.width * 0.50)
+                        Divider()
+                        TextField("State", text: $restaurant.stateOrProvince)
+                            .font(.body)
+                            .frame(width: metrics.size.width * 0.20)
+                        Divider()
+                        TextField("Zipcode", text: $restaurant.postalCode)
+                            .font(.body)
+                    })
+                }
                 
                 Picker("Cuisine", selection: $restaurant.cuisine) {
                     ForEach(Cuisine.allCases) { eachCuisine in
@@ -36,19 +52,7 @@ struct RestaurantDetailView: View {
                     }
                 }.pickerStyle(.segmented)
             }
-            /*
-            Section(header: Text("Observations")) {
-                ForEach($observations) { eachObs in
-                    TextField("Dish", text: eachObs.name).font(.body)
-                    TextField("Remarks", text: eachObs.remarks).font(.body)
-                    //TextField("Price", text: eachObs.price.formatted()).font(.body)
-                    //TextField("Rating", text: eachObs.rating.string).font(.body)
-                }
-                Button("Add Observation", action: {})
-            }
-            */
         }
-        //.navigationTitle("Edit Restaurant")
         .toolbar {
             ToolbarItem {
                 Button(action: addRestaurant) {
@@ -80,7 +84,11 @@ struct RestaurantDetailView: View {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: RestaurantModel.self, configurations: config)
         let exampleRestaurant = RestaurantModel(name: "Panka Peruvian",
-                                                address: "2837 Freeman Dr\nAnn Arbor, MI 40393",
+                                                streetAddress: "2837 Freeman Dr",
+                                                city: "Ann Arbor",
+                                                stateOrProvince: "MI",
+                                                postalCode: "30492",
+                                                streetAddress2ndLine: "",
                                                 cuisine: .italian,
                                                 sortOrder: 9,
                                                 starRating: .three)

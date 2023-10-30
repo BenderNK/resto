@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Cuisine: String, CaseIterable, Identifiable, Codable, Hashable, HasName {
+enum Cuisine: String, CaseIterable, Identifiable, Codable, Hashable, HasName, Comparable {
     case american
     case japanese
     case korean
@@ -24,5 +24,9 @@ enum Cuisine: String, CaseIterable, Identifiable, Codable, Hashable, HasName {
     
     var name: String {
         self.rawValue.capitalized
+    }
+    
+    static func < (lhs: Cuisine, rhs: Cuisine) -> Bool {
+        return lhs.name < rhs.name
     }
 }
