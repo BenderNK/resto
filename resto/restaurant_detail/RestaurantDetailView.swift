@@ -89,9 +89,9 @@ struct RestaurantDetailView: View {
                                                 stateOrProvince: "MI",
                                                 postalCode: "30492",
                                                 streetAddress2ndLine: "",
-                                                cuisine: .italian,
+                                                cuisine: Cuisine.italian.rawValue,
                                                 sortOrder: 9,
-                                                starRating: .three)
+                                                starRating: StarRating.three.rawValue)
         return RestaurantDetailView(restaurant: exampleRestaurant)
     } catch {
         fatalError("model container cannot be created")

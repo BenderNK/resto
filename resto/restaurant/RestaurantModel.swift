@@ -28,14 +28,14 @@ class RestaurantModel {
     /// zipcode or postal code of this restaurant
     var postalCode: String
     
-    /// the type of cuisine for this restaurant
-    var cuisine: Cuisine
+    /// do not use this value - only added for CoreData semantics
+    var _cuisineStringValue: String
     
     /// user's preferred sort order
     var sortOrder: Int
     
-    /// overall rating this user gave to this restaurant
-    var starRating: StarRating
+    /// do not use this value - only added for CoreData semantics
+    var _starRatingIntValue: Int
     
     /// date when this record was created
     let creationDate: Date
@@ -47,14 +47,15 @@ class RestaurantModel {
         self.city = "City"
         self.stateOrProvince = ""
         self.postalCode = ""
-        self.cuisine = .other
+        self._cuisineStringValue = Cuisine.other.rawValue
         self.sortOrder = -1
-        self.starRating = .three
+        self._starRatingIntValue = StarRating.three.rawValue
         self.creationDate = Date()
     }
     
     init(name: String, streetAddress: String, city: String, stateOrProvince: String,
-         postalCode: String, streetAddress2ndLine: String, cuisine: Cuisine, sortOrder: Int, starRating: StarRating) {
+         postalCode: String, streetAddress2ndLine: String, cuisine: String,
+         sortOrder: Int, starRating: Int) {
         self.name = name
         self.streetAddress = streetAddress
         self.streetAddress2ndLine = streetAddress2ndLine
@@ -62,9 +63,32 @@ class RestaurantModel {
         self.stateOrProvince = stateOrProvince
         self.postalCode = postalCode
         
-        self.cuisine = cuisine
+        self._cuisineStringValue = cuisine
         self.sortOrder = sortOrder
-        self.starRating = starRating
+        self._starRatingIntValue = starRating
         self.creationDate = Date()
+    }
+}
+
+extension RestaurantModel {
+    /// the type of cuisine for this restaurant
+    var cuisine: Cuisine {
+        get {
+            return Cuisine(rawValue: self._cuisineStringValue)!
+        }
+        
+        set {
+            self._cuisineStringValue = newValue.rawValue
+        }
+    }
+    
+    var starRating: StarRating {
+        get {
+            return StarRating(rawValue: self._starRatingIntValue)!
+        }
+        
+        set {
+            self._starRatingIntValue = newValue.rawValue
+        }
     }
 }
