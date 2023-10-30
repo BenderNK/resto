@@ -40,6 +40,9 @@ class RestaurantModel {
     /// date when this record was created
     let creationDate: Date
     
+    /// the observations the user has everytime the user visits the restaurant
+    var observations: [DishObservation]
+    
     init() {
         self.name = "New Restaurant"
         self.streetAddress = "123 Main Street"
@@ -51,11 +54,12 @@ class RestaurantModel {
         self.sortOrder = -1
         self._starRatingRawValue = StarRating.three.rawValue
         self.creationDate = Date()
+        self.observations = []
     }
     
     init(name: String, streetAddress: String, city: String, stateOrProvince: String,
          postalCode: String, streetAddress2ndLine: String, cuisine: String,
-         sortOrder: Int, starRating: Int) {
+         sortOrder: Int, starRating: Int, observations: [DishObservation]) {
         self.name = name
         self.streetAddress = streetAddress
         self.streetAddress2ndLine = streetAddress2ndLine
@@ -67,6 +71,7 @@ class RestaurantModel {
         self.sortOrder = sortOrder
         self._starRatingRawValue = starRating
         self.creationDate = Date()
+        self.observations = observations
     }
 }
 

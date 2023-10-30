@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MainView.swift
 //  resto
 //
 //  Created by Turker Nessa Kucuk on 10/28/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct MainView: View {
     
     @Environment(\.modelContext) private var modelContext
     @State private var sortOrder = SortDescriptor(\RestaurantModel.creationDate, order: .reverse)
@@ -62,6 +62,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    MainView()
         .modelContainer(for: RestaurantModel.self, inMemory: true)
 }

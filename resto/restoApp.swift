@@ -12,7 +12,7 @@ import SwiftData
 struct restoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
         .modelContainer(for: RestaurantModel.self)
     }

@@ -11,6 +11,7 @@ import SwiftData
 struct RestaurantDetailView: View {
     
     @Bindable var restaurant: RestaurantModel
+    @State private var newDishName: String = ""
     
     var body: some View {
         Form {
@@ -52,20 +53,35 @@ struct RestaurantDetailView: View {
                     }
                 }.pickerStyle(.segmented)
             }
+            
+            Section(header: Text("Observations")) {
+                TextField("Dish Name", text: $newDishName)
+                    .font(.body)
+                    .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.words)
+            
+            }
+            
         }
         .toolbar {
             ToolbarItem {
-                Button(action: addRestaurant) {
+                Button(action: addNewObservation) {
                     Label("Add Item", systemImage: "plus")
                 }
             }
         }
     }
     
-    private func addRestaurant() {
+    private func addNewObservation() {
         withAnimation {
-            //let newItem = RestaurantModel()
-            //modelContext.insert(newItem)
+            guard !newDishName.isEmpty else { return }
+            let newDishObservation = DishObservation(name: newDishName,
+                                          remarks: "",
+                                          price: "0",
+                                          rating: 5,
+                                          observationDate: Date.now)
+            restaurant.observations.append(newDishObservation)
+            newDishName = ""
         }
     }
 
@@ -83,6 +99,19 @@ struct RestaurantDetailView: View {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: RestaurantModel.self, configurations: config)
+        
+        let exampleObservation1 = DishObservation(name: "burrito",
+                                                  remarks: "I thought that the burrito was too spicy and didn't have sufficient acidity",
+                                                  price: "8.95",
+                                                  rating: 6,
+                                                  observationDate: Date.now)
+        
+        let exampleObservation2 = DishObservation(name: "turkey sandwich",
+                                                  remarks: "Sandwich was well made, was fresh and the bread was baked perfectly",
+                                                  price: "7.45",
+                                                  rating: 9,
+                                                  observationDate: Date.now)
+        
         let exampleRestaurant = RestaurantModel(name: "Panka Peruvian",
                                                 streetAddress: "2837 Freeman Dr",
                                                 city: "Ann Arbor",
@@ -91,7 +120,8 @@ struct RestaurantDetailView: View {
                                                 streetAddress2ndLine: "",
                                                 cuisine: Cuisine.italian.rawValue,
                                                 sortOrder: 9,
-                                                starRating: StarRating.three.rawValue)
+                                                starRating: StarRating.three.rawValue,
+                                                observations: [exampleObservation1, exampleObservation2])
         return RestaurantDetailView(restaurant: exampleRestaurant)
     } catch {
         fatalError("model container cannot be created")
