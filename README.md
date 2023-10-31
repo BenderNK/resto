@@ -1,4 +1,8 @@
 <p align="center">
+  	<img width=“393" height=“852" src="./assets/main_screen.png">
+</p>
+
+<p align="center">
     <img src="https://img.shields.io/badge/SwiftUI.x-orange?logo=swift" alt="SwiftUI">
     <img src="https://img.shields.io/badge/SwiftData.x-orange?logo=swift" alt="SwiftData">
     <img src="https://img.shields.io/badge/iOS-13%2B-blue?logo=apple" alt="iOS 17+">
