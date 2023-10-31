@@ -17,8 +17,8 @@ struct MainView: View {
     @State private var searchText = ""
 
     var body: some View {
-        NavigationSplitView(sidebar: {
-            RestaurantSorterView(with: self.sortOrder, searchString: searchText)
+        NavigationStack{
+            RestaurantTableView(with: self.sortOrder, searchString: searchText)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: addRestaurant) {
@@ -44,13 +44,11 @@ struct MainView: View {
                 }
                 .searchable(text: $searchText)
                 .navigationTitle("Restaurants")
-                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarTitleDisplayMode(.large)
                 .navigationDestination(for: RestaurantModel.self, destination: { clickedRestaurant in
                     RestaurantDetailView(restaurant: clickedRestaurant)
                 })
-        }, detail: {
-            
-        })
+        }
     }
 
     private func addRestaurant() {

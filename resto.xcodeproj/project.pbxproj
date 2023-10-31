@@ -20,7 +20,7 @@
 		B182720F2AED9941004861F6 /* HasName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182720E2AED9941004861F6 /* HasName.swift */; };
 		B18272122AEDAA11004861F6 /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18272112AEDAA11004861F6 /* RestaurantDetailView.swift */; };
 		B18272142AEDAD6B004861F6 /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18272132AEDAD6B004861F6 /* StarRating.swift */; };
-		B18272172AEF5F6B004861F6 /* RestaurantSorterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18272162AEF5F6B004861F6 /* RestaurantSorterView.swift */; };
+		B18272172AEF5F6B004861F6 /* RestaurantTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18272162AEF5F6B004861F6 /* RestaurantTableView.swift */; };
 		B182721A2AF0204F004861F6 /* DishObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18272192AF0204F004861F6 /* DishObservation.swift */; };
 		B182721C2AF022FF004861F6 /* DishRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182721B2AF022FF004861F6 /* DishRating.swift */; };
 		B182721E2AF02427004861F6 /* ImageWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182721D2AF02427004861F6 /* ImageWrapper.swift */; };
@@ -62,7 +62,7 @@
 		B182720E2AED9941004861F6 /* HasName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasName.swift; sourceTree = "<group>"; };
 		B18272112AEDAA11004861F6 /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
 		B18272132AEDAD6B004861F6 /* StarRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
-		B18272162AEF5F6B004861F6 /* RestaurantSorterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSorterView.swift; sourceTree = "<group>"; };
+		B18272162AEF5F6B004861F6 /* RestaurantTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableView.swift; sourceTree = "<group>"; };
 		B18272192AF0204F004861F6 /* DishObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishObservation.swift; sourceTree = "<group>"; };
 		B182721B2AF022FF004861F6 /* DishRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DishRating.swift; sourceTree = "<group>"; };
 		B182721D2AF02427004861F6 /* ImageWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWrapper.swift; sourceTree = "<group>"; };
@@ -119,7 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				B18272182AF0203D004861F6 /* observation */,
-				B18272152AEF5F4C004861F6 /* restaurant_sorter */,
 				B18272102AEDAA01004861F6 /* restaurant_detail */,
 				B182720B2AED9885004861F6 /* shared */,
 				B18272042AED96AE004861F6 /* restaurant */,
@@ -158,6 +157,7 @@
 		B18272042AED96AE004861F6 /* restaurant */ = {
 			isa = PBXGroup;
 			children = (
+				B18272162AEF5F6B004861F6 /* RestaurantTableView.swift */,
 				B18271DC2AED9622004861F6 /* MainView.swift */,
 				B18272052AED96BF004861F6 /* RestaurantModel.swift */,
 				B18272072AED96FA004861F6 /* Cuisine.swift */,
@@ -183,14 +183,6 @@
 				B18272112AEDAA11004861F6 /* RestaurantDetailView.swift */,
 			);
 			path = restaurant_detail;
-			sourceTree = "<group>";
-		};
-		B18272152AEF5F4C004861F6 /* restaurant_sorter */ = {
-			isa = PBXGroup;
-			children = (
-				B18272162AEF5F6B004861F6 /* RestaurantSorterView.swift */,
-			);
-			path = restaurant_sorter;
 			sourceTree = "<group>";
 		};
 		B18272182AF0203D004861F6 /* observation */ = {
@@ -341,7 +333,7 @@
 				B182720F2AED9941004861F6 /* HasName.swift in Sources */,
 				B18272202AF024AF004861F6 /* UIImage+Data.swift in Sources */,
 				B18271DD2AED9622004861F6 /* MainView.swift in Sources */,
-				B18272172AEF5F6B004861F6 /* RestaurantSorterView.swift in Sources */,
+				B18272172AEF5F6B004861F6 /* RestaurantTableView.swift in Sources */,
 				B18272062AED96BF004861F6 /* RestaurantModel.swift in Sources */,
 				B18271DB2AED9622004861F6 /* restoApp.swift in Sources */,
 				B182721C2AF022FF004861F6 /* DishRating.swift in Sources */,

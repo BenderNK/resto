@@ -9,9 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct RestaurantDetailView: View {
-    
+    @Environment(\.modelContext) private var modelContext
     @Bindable var restaurant: RestaurantModel
-    @State private var newDishName: String = ""
     
     var body: some View {
         Form {
@@ -54,43 +53,68 @@ struct RestaurantDetailView: View {
                 }.pickerStyle(.segmented)
             }
             
+            Button(action: addNewObservation, label: {
+                Text("Add new observation")
+            })
+            
+            
             Section(header: Text("Observations")) {
-                TextField("Dish Name", text: $newDishName)
-                    .font(.body)
-                    .autocorrectionDisabled(true)
-                    .textInputAutocapitalization(.words)
-            
+                List {
+                    ForEach(restaurant.observations) { eachObservation in
+                        NavigationLink(value: eachObservation, label: {
+                            VStack(alignment: .leading, spacing: 4, content: {
+                                Text(eachObservation.name).font(.headline)
+                                Text(eachObservation.remarks).font(.subheadline)
+                                Text(String(eachObservation.dishRating.rawValue)).font(.footnote).foregroundStyle(.gray)
+                            })
+                        })
+                    }
+                    .onDelete(perform: deleteObservation)
+                }
             }
-            
         }
+        .navigationTitle(restaurant.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: DishObservation.self, destination: { thisDish in
+            DishDetailView(dishObservation: thisDish)
+        })
         .toolbar {
             ToolbarItem {
-                Button(action: addNewObservation) {
+                Button(action: addNewObservation, label: {
                     Label("Add Item", systemImage: "plus")
-                }
+                })
             }
         }
     }
     
     private func addNewObservation() {
         withAnimation {
-            guard !newDishName.isEmpty else { return }
-            let newDishObservation = DishObservation(name: newDishName,
-                                          remarks: "",
-                                          price: "0",
-                                          rating: 5,
-                                          observationDate: Date.now)
+            let newDishObservation = DishObservation(name: "Dish name",
+                                                     remarks: "",
+                                                     price: "",
+                                                     rating: 5,
+                                                     observationDate: Date.now)
             restaurant.observations.append(newDishObservation)
-            newDishName = ""
         }
     }
 
-    private func deleteRestaurants(indexSet: IndexSet) {
+    private func deleteObservation(indexSet: IndexSet) {
         withAnimation {
-            //for index in indexSet {
-            //    let restaurantToDelete = restaurants[index]
-            //    modelContext.delete(restaurantToDelete)
-            //}
+            //need to perform deep copy before deletion
+            //see: https://stackoverflow.com/questions/77120576/how-do-i-delete-child-items-from-list-with-swiftdata
+            for index in indexSet {
+                let obsToDelete = restaurant.observations[index]
+                let objectId = obsToDelete.persistentModelID
+                let deepCopy = modelContext.model(for: objectId)
+                modelContext.delete(deepCopy)
+            }
+            
+            restaurant.observations.remove(atOffsets: indexSet)
+            do {
+                try modelContext.save()
+            } catch {
+                print("Error saving context \(error)")
+            }
         }
     }
 }

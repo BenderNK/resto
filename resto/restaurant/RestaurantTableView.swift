@@ -1,5 +1,5 @@
 //
-//  RestaurantSorterView.swift
+//  RestaurantTableView.swift
 //  resto
 //
 //  Created by Turker Nessa Kucuk on 10/29/23.
@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct RestaurantSorterView: View {
+struct RestaurantTableView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \RestaurantModel.creationDate, order: .reverse) private var restaurants: [RestaurantModel]
     
@@ -55,5 +55,5 @@ struct RestaurantSorterView: View {
 }
 
 #Preview {
-    RestaurantSorterView(with: SortDescriptor(\RestaurantModel.creationDate, order: .reverse))
+    RestaurantTableView(with: SortDescriptor(\RestaurantModel.creationDate, order: .reverse))
 }

@@ -42,6 +42,8 @@ struct DishDetailView: View {
                 }
             }
         }
+        .navigationTitle(dishObservation.name)
+        .navigationBarTitleDisplayMode(.inline)
     }
     
 
