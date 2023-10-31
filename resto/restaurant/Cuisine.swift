@@ -19,6 +19,7 @@ enum Cuisine: String, CaseIterable, Identifiable, Codable, Hashable, HasName, Co
     case french
     case german
     case south_american
+    case subshop
     
     var id: Self { self }
     
